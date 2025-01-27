@@ -21,7 +21,7 @@
     }
   },
   "name": "ya-json-schema-types",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "TypeScript types for JSONSchema 2020-12",
   "main": "dist/index.js",
   "scripts": {
