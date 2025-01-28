@@ -1,34 +1,34 @@
-import { type JsonArray, type JsonObject } from "type-fest";
+import { type JsonArray, type JsonObject } from 'type-fest';
 
 export type JSONSchemaPrimitive =
-  | "null"
-  | "boolean"
-  | "object"
-  | "array"
-  | "number"
-  | "integer"
-  | "string";
+  | 'null'
+  | 'boolean'
+  | 'object'
+  | 'array'
+  | 'number'
+  | 'integer'
+  | 'string';
 
 export type JSONSchemaFormat =
-  | "date"
-  | "time"
-  | "date-time"
-  | "duration"
-  | "email"
-  | "idn-email"
-  | "hostname"
-  | "idn-hostname"
-  | "ipv4"
-  | "ipv6"
-  | "uri"
-  | "uri-reference"
-  | "iri"
-  | "iri-reference"
-  | "uuid"
-  | "uri-template"
-  | "json-pointer"
-  | "relative-json-pointer"
-  | "regex";
+  | 'date'
+  | 'time'
+  | 'date-time'
+  | 'duration'
+  | 'email'
+  | 'idn-email'
+  | 'hostname'
+  | 'idn-hostname'
+  | 'ipv4'
+  | 'ipv6'
+  | 'uri'
+  | 'uri-reference'
+  | 'iri'
+  | 'iri-reference'
+  | 'uuid'
+  | 'uri-template'
+  | 'json-pointer'
+  | 'relative-json-pointer'
+  | 'regex';
 
 export type JSONSchemaPrimitiveTypes = {
   null: null;
@@ -44,16 +44,16 @@ export type JSONSchemaValue =
   JSONSchemaPrimitiveTypes[keyof JSONSchemaPrimitiveTypes];
 
 export type JSONSchemaTypedProperties =
-  | "type"
-  | "enum"
-  | "const"
-  | "default"
-  | "examples";
+  | 'type'
+  | 'enum'
+  | 'const'
+  | 'default'
+  | 'examples';
 
 export type BaseJSONSchema<
   T extends JSONSchemaPrimitive = JSONSchemaPrimitive,
   F extends JSONSchemaFormat = JSONSchemaFormat,
-  O extends Record<string, unknown> = Record<string, unknown>
+  O extends Record<string, unknown> = Record<string, unknown>,
 > = {
   $id?: string;
   $comment?: string;
@@ -77,7 +77,7 @@ export type ValueOnlyJSONSchema<T extends JSONSchemaPrimitive> = {
 };
 
 export type NullJSONSchema = {
-  type: "null";
+  type: 'null';
   enum?: [null];
   const?: null;
   default?: null;
@@ -85,7 +85,7 @@ export type NullJSONSchema = {
 };
 
 export type BooleanJSONSchema = {
-  type: "boolean";
+  type: 'boolean';
   enum?: boolean[];
   const?: boolean;
   default?: boolean;
@@ -93,7 +93,7 @@ export type BooleanJSONSchema = {
 };
 
 export type NumericJSONSchema = {
-  type: "number" | "integer";
+  type: 'number' | 'integer';
   enum?: number[];
   const?: number;
   default?: number;
@@ -108,9 +108,9 @@ export type NumericJSONSchema = {
 export type TextJSONSchema<
   T extends JSONSchemaPrimitive = JSONSchemaPrimitive,
   F extends JSONSchemaFormat = JSONSchemaFormat,
-  O extends Record<string, unknown> = Record<string, unknown>
+  O extends Record<string, unknown> = Record<string, unknown>,
 > = {
-  type: "string";
+  type: 'string';
   enum?: string[];
   const?: string;
   default?: string;
@@ -127,9 +127,9 @@ export type TextJSONSchema<
 export type ArrayJSONSchema<
   T extends JSONSchemaPrimitive = JSONSchemaPrimitive,
   F extends JSONSchemaFormat = JSONSchemaFormat,
-  O extends Record<string, unknown> = Record<string, unknown>
+  O extends Record<string, unknown> = Record<string, unknown>,
 > = {
-  type: "array";
+  type: 'array';
   enum?: JsonArray[];
   const?: JsonArray;
   default?: JsonArray;
@@ -148,9 +148,9 @@ export type ArrayJSONSchema<
 export type ObjectJSONSchema<
   T extends JSONSchemaPrimitive = JSONSchemaPrimitive,
   F extends JSONSchemaFormat = JSONSchemaFormat,
-  O extends Record<string, unknown> = Record<string, unknown>
+  O extends Record<string, unknown> = Record<string, unknown>,
 > = {
-  type: "object";
+  type: 'object';
   enum?: JsonObject[];
   const?: JsonObject;
   default?: JsonObject;
@@ -169,7 +169,7 @@ export type ObjectJSONSchema<
 export type TypedJSONSchema<
   T extends JSONSchemaPrimitive = JSONSchemaPrimitive,
   F extends JSONSchemaFormat = JSONSchemaFormat,
-  O extends Record<string, unknown> = Record<string, unknown>
+  O extends Record<string, unknown> = Record<string, unknown>,
 > = NumericJSONSchema &
   NullJSONSchema &
   BooleanJSONSchema &
@@ -181,30 +181,30 @@ export type TypedJSONSchema<
 export type NestedJSONSchema<
   T extends JSONSchemaPrimitive = JSONSchemaPrimitive,
   F extends JSONSchemaFormat = JSONSchemaFormat,
-  O extends Record<string, unknown> = Record<string, unknown>
+  O extends Record<string, unknown> = Record<string, unknown>,
 > = {
   type?: T[];
   enum?: JSONSchemaPrimitiveTypes[T][];
   const?: JSONSchemaPrimitiveTypes[T];
   default?: JSONSchemaPrimitiveTypes[T];
   examples?: JSONSchemaPrimitiveTypes[T][];
-} & (T extends "number"
+} & (T extends 'number'
   ? Omit<NumericJSONSchema, JSONSchemaTypedProperties>
   : never) &
-  (T extends "string"
+  (T extends 'string'
     ? Omit<TextJSONSchema<T, F, O>, JSONSchemaTypedProperties>
     : never) &
-  (T extends "array"
+  (T extends 'array'
     ? Omit<ArrayJSONSchema<T, F, O>, JSONSchemaTypedProperties>
     : never) &
-  (T extends "object"
+  (T extends 'object'
     ? Omit<ObjectJSONSchema<T, F, O>, JSONSchemaTypedProperties>
     : never);
 
 export type ComposedJSONSchema<
   T extends JSONSchemaPrimitive = JSONSchemaPrimitive,
   F extends JSONSchemaFormat = JSONSchemaFormat,
-  O extends Record<string, unknown> = Record<string, unknown>
+  O extends Record<string, unknown> = Record<string, unknown>,
 > = {
   type?: T | T[];
   enum?: JSONSchemaPrimitiveTypes[T][];
@@ -232,7 +232,7 @@ export type ComposedJSONSchema<
 export type JSONSchema<
   T extends JSONSchemaPrimitive = JSONSchemaPrimitive,
   F extends JSONSchemaFormat = JSONSchemaFormat,
-  O extends Record<string, unknown> = Record<string, unknown>
+  O extends Record<string, unknown> = Record<string, unknown>,
 > =
   | FalseJSONSchema
   | TrueJSONSchema
@@ -249,13 +249,12 @@ export type JSONSchema<
       ))
   | (BaseJSONSchema<T, F, O> & ComposedJSONSchema<T, F, O>);
 
-
-  export type ExpressiveTextJSONSchema<
+export type ExpressiveTextJSONSchema<
   T extends JSONSchemaPrimitive = JSONSchemaPrimitive,
   F extends JSONSchemaFormat = JSONSchemaFormat,
-  O extends Record<string, unknown> = Record<string, unknown>
+  O extends Record<string, unknown> = Record<string, unknown>,
 > = {
-  type: "string";
+  type: 'string';
   enum?: string[];
   const?: string;
   default?: string;
@@ -272,9 +271,9 @@ export type JSONSchema<
 export type ExpressiveArrayJSONSchema<
   T extends JSONSchemaPrimitive = JSONSchemaPrimitive,
   F extends JSONSchemaFormat = JSONSchemaFormat,
-  O extends Record<string, unknown> = Record<string, unknown>
+  O extends Record<string, unknown> = Record<string, unknown>,
 > = {
-  type: "array";
+  type: 'array';
   enum?: JsonArray[];
   const?: JsonArray;
   default?: JsonArray;
@@ -283,7 +282,7 @@ export type ExpressiveArrayJSONSchema<
   contains?: ExpressiveJSONSchema<T, F, O>;
   prefixItems?: [
     ExpressiveJSONSchema<T, F, O>,
-    ...ExpressiveJSONSchema<T, F, O>[]
+    ...ExpressiveJSONSchema<T, F, O>[],
   ];
   maxItems?: number;
   minItems?: number;
@@ -296,15 +295,18 @@ export type ExpressiveArrayJSONSchema<
 export type ExpressiveObjectJSONSchema<
   T extends JSONSchemaPrimitive = JSONSchemaPrimitive,
   F extends JSONSchemaFormat = JSONSchemaFormat,
-  O extends Record<string, unknown> = Record<string, unknown>
+  O extends Record<string, unknown> = Record<string, unknown>,
 > = {
-  type: "object";
+  type: 'object';
   enum?: JsonObject[];
   const?: JsonObject;
   default?: JsonObject;
   examples?: JsonObject[];
   properties?: Record<string, ExpressiveJSONSchema<T, F, O>>;
-  additionalProperties?: ExpressiveJSONSchema<T, F, O>;
+  additionalProperties?:
+    | ExpressiveJSONSchema<T, F, O>
+    | TrueJSONSchema
+    | FalseJSONSchema;
   patternProperties?: Record<string, ExpressiveJSONSchema<T, F, O>>;
   propertyNames?: ExpressiveTextJSONSchema<T, F, O>;
   maxProperties?: number;
@@ -313,8 +315,6 @@ export type ExpressiveObjectJSONSchema<
   dependentRequired?: Record<string, string[]>;
   unevaluatedProperties?: ExpressiveJSONSchema<T, F, O>;
 };
-
-
 
 /** A type to force JSONSchema expressiveness in
  * order to avoid having to know the JSONSchema
@@ -326,7 +326,7 @@ export type ExpressiveObjectJSONSchema<
 export type ExpressiveJSONSchema<
   T extends JSONSchemaPrimitive = JSONSchemaPrimitive,
   F extends JSONSchemaFormat = JSONSchemaFormat,
-  O extends Record<string, unknown> = Record<string, unknown>
+  O extends Record<string, unknown> = Record<string, unknown>,
 > = BaseJSONSchema<T, F, O> &
   (
     | NullJSONSchema
@@ -338,13 +338,13 @@ export type ExpressiveJSONSchema<
     | {
         anyOf: [
           ExpressiveJSONSchema<T, F, O>,
-          ...ExpressiveJSONSchema<T, F, O>[]
+          ...ExpressiveJSONSchema<T, F, O>[],
         ];
       }
     | {
         oneOf: [
           ExpressiveJSONSchema<T, F, O>,
-          ...ExpressiveJSONSchema<T, F, O>[]
+          ...ExpressiveJSONSchema<T, F, O>[],
         ];
       }
     | { $ref: string }

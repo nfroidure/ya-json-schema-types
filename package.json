@@ -38,7 +38,7 @@
     "prettier": "prettier --write 'src/**/*.ts'",
     "preversion": "npm t && npm run lint && npm run metapak -- -s && npm run build",
     "rebuild": "swc ./src -s -d dist -C jsc.target=es2022",
-    "test": "echo \"WARNING: No tests specified\" && npm run jest",
+    "test": "npm run jest",
     "type-check": "tsc --pretty --noEmit",
     "version": "npm run changelog"
   },
@@ -50,12 +50,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nfroidure/whook.git"
+    "url": "git+https://github.com/nfroidure/ya-json-schema-types.git"
   },
   "bugs": {
-    "url": "https://github.com/nfroidure/whook/issues"
+    "url": "https://github.com/nfroidure/ya-json-schema-types/issues"
   },
-  "homepage": "https://github.com/nfroidure/whook",
+  "homepage": "https://github.com/nfroidure/ya-json-schema-types",
   "devDependencies": {
     "@eslint/js": "^9.16.0",
     "@swc/cli": "^0.5.2",
