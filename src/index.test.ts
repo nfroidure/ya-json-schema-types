@@ -23,4 +23,26 @@ describe('ExpressiveJSONSchema', () => {
 
     expect(schema);
   });
+
+  test('should work with format', () => {
+    const schema: ExpressiveJSONSchema = {
+      type: 'string',
+      format: 'date',
+    };
+
+    expect(schema);
+  });
+
+  test('should work with arrays', () => {
+    const schema: ExpressiveJSONSchema = {
+      type: 'array',
+      prefixItems: [
+        {
+          type: 'string',
+        },
+      ],
+    };
+
+    expect(schema);
+  });
 });
